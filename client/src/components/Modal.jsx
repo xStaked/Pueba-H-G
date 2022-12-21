@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { AiFillEdit } from 'react-icons/ai';
 export const ModalComponent = ({ show = false, handleClose, handleShow }) => {
 	return (
 		<>
 			<Button variant='primary' onClick={handleShow}>
-				Editar
+				<div className='flex flex-row items-center'>
+					<AiFillEdit className='mx-1' />
+					Editar
+				</div>
 			</Button>
 
 			<Modal show={show} onHide={handleClose}>
