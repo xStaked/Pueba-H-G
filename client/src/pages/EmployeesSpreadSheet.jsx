@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ButtonComponent } from '../components/ButtonComponent';
 import { ModalComponent } from '../components/Modal';
 import { fetchEmployees } from '../features/employees/thunk';
+
 export const EmployeesSpreadSheet = () => {
 	const [show, setShow] = useState(false);
 	const dispatch = useDispatch();
@@ -14,7 +16,7 @@ export const EmployeesSpreadSheet = () => {
 	}, []);
 
 	const employees = useSelector((state) => state.employee);
-
+	const isAdmin = useSelector((state) => state.utils.isAdmin);
 	return (
 		<>
 			{/* <div>EmployeesSpreadSheet</div> */}
@@ -24,6 +26,7 @@ export const EmployeesSpreadSheet = () => {
 					<h4>Apellido</h4>
 					<h4>Estado</h4>
 					<h4>Fecha de registro</h4>
+					<h4>Acciones</h4>
 				</div>
 				{employees
 					? employees.employees?.map((employee) => {
@@ -42,6 +45,9 @@ export const EmployeesSpreadSheet = () => {
 										handleClose={handleClose}
 										handleShow={handleShow}
 									/>
+									{isAdmin ? (
+										<ButtonComponent type='danger' text='Eliminar' />
+									) : null}
 								</div>
 							);
 					  })
