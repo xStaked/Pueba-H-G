@@ -6,6 +6,7 @@ import { fetchEmployees } from '../features/employees/thunk';
 
 export const EmployeesSpreadSheet = () => {
 	const [show, setShow] = useState(false);
+	const [data, setData] = useState({});
 	const dispatch = useDispatch();
 
 	const handleClose = () => setShow(false);
@@ -17,37 +18,61 @@ export const EmployeesSpreadSheet = () => {
 
 	const employees = useSelector((state) => state.employee);
 	const isAdmin = useSelector((state) => state.utils.isAdmin);
+
+	const handleChange = (e) => {
+		setData({
+			...data,
+			[e.target.name]: e.target.value,
+		});
+	};
+
 	return (
 		<>
-			{/* <div>EmployeesSpreadSheet</div> */}
-			<section className=' w-screen h-screen flex flex-col justify-center items-center'>
-				<div className='w-full flex flex-row justify-around items-center font-bold text-base'>
-					<h4>Nombre</h4>
-					<h4>Apellido</h4>
-					<h4>Estado</h4>
-					<h4>Fecha de registro</h4>
-					<h4>Acciones</h4>
-				</div>
+			<section className='text-white w-screen h-screen flex flex-col justify-center items-center'>
 				{employees
 					? employees.employees?.map((employee) => {
 							return (
 								<div
 									key={employee.id}
-									className=' w-full flex flex-row justify-evenly p-2 items-center text-base  font-semibold'
+									className=' w-[90%] flex flex-row justify-evenly border rounded-lg m-2 p-2 items-center text-base  font-semibold max-md:flex-wrap max-md:flex-col  max-md:h-[500px]'
 								>
-									<span>{employee.name}</span>
-									<span>{employee.lastName}</span>
-									<span>{employee.state}</span>
-									<span>{employee.regDate}</span>
-									{/* <button onClick={() => setOpenModal(true)}>Editar</button> */}
-									<ModalComponent
-										show={show}
-										handleClose={handleClose}
-										handleShow={handleShow}
-									/>
-									{isAdmin ? (
-										<ButtonComponent type='danger' text='Eliminar' />
-									) : null}
+									<div className='w-full flex  justify-around items-center font-bold text-base max-md:flex-col max-md:text-center'>
+										<div>
+											<h4 className='font-semibold'>Nombre</h4>
+											<div className='flex flex-row'>
+												<img src='src/assets/Avatar.png' alt='userImage' />
+												<span className='mx-2'>{employee.name}</span>
+											</div>
+										</div>{' '}
+										<div>
+											<h4 className='font-semibold'>Apellido</h4>
+											<span>{employee.lastName}</span>
+										</div>{' '}
+										<div>
+											<h4 className='font-semibold'>Estado</h4>
+											<span>{employee.state}</span>
+										</div>{' '}
+										<div>
+											<h4 className='font-semibold'>Fecha de registro</h4>
+											<span>{employee.regDate}</span>
+										</div>{' '}
+										<div className=''>
+											<h4 className='font-semibold'>Acciones</h4>
+											<div className='w-[250px] flex flex-row justify-around items-center'>
+												<ModalComponent
+													show={show}
+													handleClose={handleClose}
+													handleShow={handleShow}
+													handleChange={handleChange}
+													userName={employee.name}
+													userLastName={employee.lastName}
+												/>
+												{isAdmin ? (
+													<ButtonComponent type='danger' text='Eliminar' />
+												) : null}
+											</div>{' '}
+										</div>
+									</div>
 								</div>
 							);
 					  })

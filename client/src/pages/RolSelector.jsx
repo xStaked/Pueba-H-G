@@ -9,12 +9,12 @@ export const RolSelector = () => {
 	const dispatch = useDispatch();
 
 	const handleClick = (admin) => {
-		navigate('/employees');
 		dispatch(setIsAdmin(admin));
+		navigate('/employees');
 	};
 
 	return (
-		<section className='h-screen flex justify-center items-center'>
+		<section className=' h-screen flex justify-center items-center'>
 			<FadeIn
 				from='bottom'
 				positionOffset={400}
@@ -22,7 +22,7 @@ export const RolSelector = () => {
 				delayInMilliseconds={400}
 			>
 				<section className='flex flex-col items-center'>
-					<h1 className='my-8 font-semibold'>Selecciona tu rol</h1>
+					<h1 className='my-8 font-semibold text-white'>Selecciona tu rol</h1>
 					<div className='flex flex-row justify-evenly w-[300px]'>
 						<div>
 							<ButtonComponent
