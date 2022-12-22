@@ -59,7 +59,7 @@ const deleteEmployees = async (req, res) => {
     const { id } = req.params;
 
     const result = await connection.query(
-      "UPDATE employees SET estado='Eliminado' WHERE employees.id=" + id
+      "UPDATE employees SET state='Eliminado' WHERE employees.id=" + id
     );
     res.json(result);
   } catch (error) {
