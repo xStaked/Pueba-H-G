@@ -13,7 +13,7 @@ export const fetchEmployees = () => {
 	};
 };
 
-export const editEmployees = (id,data) => {
+export const editEmployees = (id, data) => {
 	return async (dispatch) => {
 		try {
 			await axios.put(`http://localhost:4000/api/employees/${id}`, data);
@@ -23,7 +23,7 @@ export const editEmployees = (id,data) => {
 			console.log(error);
 		}
 	};
-}
+};
 
 export const deleteEmployees = (id) => {
 	return async (dispatch) => {
@@ -35,4 +35,4 @@ export const deleteEmployees = (id) => {
 			console.log(error);
 		}
 	};
-}
+};

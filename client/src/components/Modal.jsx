@@ -43,6 +43,7 @@ export const ModalComponent = ({
 							<Form.Group onChange={handleChange} className='mb-3' controlId='formBasicPassword'>
 								<Form.Label>Estado</Form.Label>
 								<Form.Select name="state">
+									<option >Seleccionar</option>
 									<option value='Activo'>Activo</option>
 									<option value='Inactivo'>Inactivo</option>
 								</Form.Select>

@@ -7,6 +7,8 @@ export const employeeSlice = createSlice({
 	initialState,
 	reducers: {
 		getEmployees: (state, action) => {
+			// const filterEmployes = state?.employee?.employees?.filter( (employee) => employee.status === 'Activo' || employee.status === 'Inactivo' );
+			// console.log(filterEmployes);
 			state.employees = action.payload;
 		},
 		editEmployeeOpenModal: (state, action) => {
