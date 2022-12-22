@@ -2,7 +2,7 @@
 
 ### El respositorio esta separado en 2 carpetas la primera "api" hace referencia a todo lo refente al backend y la segunda al apartado del cliente o frontend "client"
 
-## Como correr el backend
+## ¿Cómo correr el backend?
     1. Entrar a la carpeta cd/api
     2. instalar dependencias con npm install 
     3. ir a xamp/wamp y generar la base de datos con nombre prueba y subir el archivo que .sql que esta en la carpeta
