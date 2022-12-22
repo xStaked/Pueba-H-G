@@ -4,44 +4,57 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { AiFillEdit } from 'react-icons/ai';
-export const ModalComponent = ({ show = false, handleClose, handleShow }) => {
+export const ModalComponent = ({
+	show = false,
+	handleOpen,
+	handleChange,
+	handleEdit,
+	userName,
+	userLastName,
+	userId,
+	userType,
+}) => {
 	return (
 		<>
-			<Button variant='primary' onClick={handleShow}>
+			<Button variant='primary' onClick={() => handleOpen(userId)}>
 				<div className='flex flex-row items-center'>
 					<AiFillEdit className='mx-1' />
 					Editar
 				</div>
 			</Button>
 
-			<Modal show={show} onHide={handleClose}>
+			<Modal show={show} onHide={() => handleOpen(userId)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Editar Empleado</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3' controlId='formBasicEmail'>
-							<Form.Label>Nombre</Form.Label>
-							<Form.Control type='text' placeholder='Nombre' />
-						</Form.Group>
-						<Form.Group className='mb-3' controlId='formBasicPassword'>
-							<Form.Label>Apellido</Form.Label>
-							<Form.Control type='text' placeholder='Apellido' />
-						</Form.Group>
-						<Form.Group className='mb-3' controlId='formBasicPassword'>
-							<Form.Label>Estado</Form.Label>
-							<Form.Select>
-								<option value='1'>Activo</option>
-								<option value='0'>Inactivo</option>
-							</Form.Select>
-						</Form.Group>
+					<Form >
+						{userType === 'admin' ? (
+							<Form.Group onChange={handleChange} className='mb-3' controlId='formBasicEmail'>
+								<Form.Label>Nombre</Form.Label>
+								<Form.Control
+									name='name'
+									type='text'
+									placeholder={userName}
+									autoComplete='off'
+								/>
+							</Form.Group>
+						) : (
+							<Form.Group onChange={handleChange} className='mb-3' controlId='formBasicPassword'>
+								<Form.Label>Estado</Form.Label>
+								<Form.Select name="state">
+									<option value='Activo'>Activo</option>
+									<option value='Inactivo'>Inactivo</option>
+								</Form.Select>
+							</Form.Group>
+						)}
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='secondary' onClick={handleClose}>
+					<Button variant='secondary' onClick={() => handleOpen(userId)}>
 						Cerrar
 					</Button>
-					<Button variant='success' onClick={handleClose}>
+					<Button variant='success' onClick={() => handleEdit(userId)}>
 						Guardar Cambios
 					</Button>
 				</Modal.Footer>
@@ -52,6 +65,11 @@ export const ModalComponent = ({ show = false, handleClose, handleShow }) => {
 
 Modal.propTypes = {
 	show: PropTypes.bool.isRequired,
-	handleClose: PropTypes.func,
-	handleShow: PropTypes.func,
+	handleOpen: PropTypes.func,
+	handleChange: PropTypes.func,
+	handleEdit: PropTypes.func,
+	userName: PropTypes.string,
+	userLastName: PropTypes.string,
+	userId: PropTypes.number,
+	userType: PropTypes.string,
 };

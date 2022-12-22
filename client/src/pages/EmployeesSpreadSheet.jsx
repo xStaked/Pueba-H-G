@@ -2,22 +2,28 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ButtonComponent } from '../components/ButtonComponent';
 import { ModalComponent } from '../components/Modal';
-import { fetchEmployees } from '../features/employees/thunk';
-
+import { fetchEmployees, editEmployees } from '../features/employees/thunk';
+import { editEmployeeOpenModal } from '../features/employees/EmployeeSlice';
 export const EmployeesSpreadSheet = () => {
-	const [show, setShow] = useState(false);
+	const employees = useSelector((state) => state.employee);
+	const isAdmin = useSelector((state) => state.utils.isAdmin);
 	const [data, setData] = useState({});
 	const dispatch = useDispatch();
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleOpen = (id) => {
+		dispatch(editEmployeeOpenModal(id));
+	};
+
+	const handleEdit = (id) => {
+		dispatch(editEmployeeOpenModal(id));
+		dispatch(editEmployees(id, data));
+		dispatch(fetchEmployees());
+
+	};
 
 	useEffect(() => {
 		dispatch(fetchEmployees());
 	}, []);
-
-	const employees = useSelector((state) => state.employee);
-	const isAdmin = useSelector((state) => state.utils.isAdmin);
 
 	const handleChange = (e) => {
 		setData({
@@ -25,6 +31,8 @@ export const EmployeesSpreadSheet = () => {
 			[e.target.name]: e.target.value,
 		});
 	};
+
+	console.log(data);
 
 	return (
 		<>
@@ -60,12 +68,14 @@ export const EmployeesSpreadSheet = () => {
 											<h4 className='font-semibold'>Acciones</h4>
 											<div className='w-[250px] flex flex-row justify-around items-center'>
 												<ModalComponent
-													show={show}
-													handleClose={handleClose}
-													handleShow={handleShow}
+													show={employee.openModal === 1}
+													handleOpen={handleOpen}
 													handleChange={handleChange}
+													handleEdit={handleEdit}
 													userName={employee.name}
 													userLastName={employee.lastName}
+													userId={employee.id}
+													userType={isAdmin ? 'admin' : 'employee'}
 												/>
 												{isAdmin ? (
 													<ButtonComponent type='danger' text='Eliminar' />
